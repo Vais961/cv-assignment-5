@@ -38,10 +38,10 @@ def onmouse(self,event,x,y,flags,param):
                                 self.drawing=True
                                 res=cv2.circle(self.img,(x,y),self.thickness,self.values[self.val+1][2],-1)
                                 res=cv2.circle(self.mask,(x,y),self.thickness,self.values[self.val][2],-1)
-       elif event==cv2.EVENT_MOUSEMOVE and self.drawing:
+        elif event==cv2.EVENT_MOUSEMOVE and self.drawing:
                         res=cv2.circle(self.img,(x,y),self.thickness,self.values[self.val+1][2],-1)
                         res=cv2.circle(self.mask,(x,y),self.thickness,self.values[self.val][2],-1)
-       elif event==cv2.EVENT_LBUTTONUP and self.drawing:
+        elif event==cv2.EVENT_LBUTTONUP and self.drawing:
                         self.drawing=False
 
 def process(self,image_path,output_path):
