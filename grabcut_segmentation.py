@@ -61,48 +61,48 @@ def process(self,image_path,output_path):
 	print("To segment image press n")
 	print("To save image press s")
 	print("To quit press q")
-        cv2.setMouseCallback("GrabCut Image",self.onmouse)
-        while(True):
-                    cv2.imshow("GrabCut Image",self.img)
-                    cv2.imshow("Mask",self.mask)
-                    key=cv2.waitKey(1) & 0xFF
-                        if key==ord('q'):
-                                break
-                        elif key==ord("0") or key==ord("1"):
-                                self.val=0
-                        elif key==ord("2") or key==ord("3"):
-                                self.val=2
-                        elif key==ord("r"):
-                                self.mode=0
-                                self.img=image.copy()
-                                self.mask=np.zeros(image.shape[:2],dtype="uint8")
-                                self.rect=(0,0,0,0)
-                                self.pt=[]
-                                self.rectangle=False
-                                self.drawing=False
-                                self.val=2
-                        elif key==ord("n") or self.mode==1:
-                                print("Segmenting...")
-                                fgModel=np.zeros((1,65),dtype="float")
-                                bgModel=np.zeros((1,65),dtype="float")
-                                if self.mode==1:
-                                        (self.mask,bgModel,fgModel)=cv2.grabCut(self.img,self.mask,self.rect,bgModel,fgModel,iterCount=1,mode=cv2.GC_INIT_WITH_RECT)
-                                        self.mode=0
-                                elif self.mode==0:
-                                        self.mask[self.mask==0]=cv2.GC_BGD
-                                        self.mask[self.mask>0]=cv2.GC_FGD
-                                        (self.mask,bgModel,fgModel)=cv2.grabCut(image,self.mask,None,bgModel,fgModel,iterCount=1,mode=cv2.GC_INIT_WITH_MASK)
-                                outputMask=np.where((self.mask==cv2.GC_BGD)|(self.mask==cv2.GC_PR_BGD),0,1)
-                                outputMask=(outputMask*255).astype("uint8")
-                                self.img=cv2.bitwise_and(image,image,mask=outputMask)
-                                self.mask=outputMask
-                        elif key==ord("s"):
-                                output=np.zeros((image.shape[0]*2,image.shape[1],image.shape[2]),dtype="uint8")
-                                output[:image.shape[0],:,:]=self.mask
-                                output[image.shape[0]:,:,:]=self.img
-                                output=cv2.resize(output,image.shape)
-                                cv2.imwrite(output_path,output)
-                print("Done")
+       		 cv2.setMouseCallback("GrabCut Image",self.onmouse)
+      		 while(True):
+			    cv2.imshow("GrabCut Image",self.img)
+			    cv2.imshow("Mask",self.mask)
+			    key=cv2.waitKey(1) & 0xFF
+				if key==ord('q'):
+					break
+				elif key==ord("0") or key==ord("1"):
+					self.val=0
+				elif key==ord("2") or key==ord("3"):
+					self.val=2
+				elif key==ord("r"):
+					self.mode=0
+					self.img=image.copy()
+					self.mask=np.zeros(image.shape[:2],dtype="uint8")
+					self.rect=(0,0,0,0)
+					self.pt=[]
+					self.rectangle=False
+					self.drawing=False
+					self.val=2
+				elif key==ord("n") or self.mode==1:
+					print("Segmenting...")
+					fgModel=np.zeros((1,65),dtype="float")
+					bgModel=np.zeros((1,65),dtype="float")
+					if self.mode==1:
+						(self.mask,bgModel,fgModel)=cv2.grabCut(self.img,self.mask,self.rect,bgModel,fgModel,iterCount=1,mode=cv2.GC_INIT_WITH_RECT)
+						self.mode=0
+					elif self.mode==0:
+						self.mask[self.mask==0]=cv2.GC_BGD
+						self.mask[self.mask>0]=cv2.GC_FGD
+						(self.mask,bgModel,fgModel)=cv2.grabCut(image,self.mask,None,bgModel,fgModel,iterCount=1,mode=cv2.GC_INIT_WITH_MASK)
+					outputMask=np.where((self.mask==cv2.GC_BGD)|(self.mask==cv2.GC_PR_BGD),0,1)
+					outputMask=(outputMask*255).astype("uint8")
+					self.img=cv2.bitwise_and(image,image,mask=outputMask)
+					self.mask=outputMask
+				elif key==ord("s"):
+					output=np.zeros((image.shape[0]*2,image.shape[1],image.shape[2]),dtype="uint8")
+					output[:image.shape[0],:,:]=self.mask
+					output[image.shape[0]:,:,:]=self.img
+					output=cv2.resize(output,image.shape)
+					cv2.imwrite(output_path,output)
+               			 print("Done")
 
 if __name__=='__main__':
     ap = argparse.ArgumentParser()
