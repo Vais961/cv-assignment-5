@@ -18,8 +18,7 @@ class GrabCut():
         img=np.zeros((0))
         mask=np.zeros((0))
 
-
- def onmouse(self,event,x,y,flags,param):
+def onmouse(self,event,x,y,flags,param):
         if event==cv2.EVENT_RBUTTONDOWN:
                         self.rectangle=True
                         self.pt=[(x,y)]
