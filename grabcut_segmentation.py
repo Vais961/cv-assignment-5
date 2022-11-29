@@ -19,20 +19,20 @@ class GrabCut():
         mask=np.zeros((0))
 
 
-        def onmouse(self,event,x,y,flags,param):
-                if event==cv2.EVENT_RBUTTONDOWN:
+ def onmouse(self,event,x,y,flags,param):
+        if event==cv2.EVENT_RBUTTONDOWN:
                         self.rectangle=True
                         self.pt=[(x,y)]
-                elif event==cv2.EVENT_MOUSEMOVE and self.rectangle:
+        elif event==cv2.EVENT_MOUSEMOVE and self.rectangle:
                         img1=self.img.copy()
                         res=cv2.rectangle(img1,self.pt[0],(x,y),(0,255,0),2)
                         cv2.imshow("GrabCut Image",img1)
-                elif event==cv2.EVENT_RBUTTONUP and self.rectangle:
+        elif event==cv2.EVENT_RBUTTONUP and self.rectangle:
                         self.pt.append((x,y))
                         self.rectangle=False
                         self.rect=(self.pt[0][0],self.pt[0][1],self.pt[1][0]-self.pt[0][0],self.pt[1][1]-self.pt[0][1])
                         self.mode=1
-                if event==cv2.EVENT_LBUTTONDOWN:
+        if event==cv2.EVENT_LBUTTONDOWN:
                         if len(self.pt)!=2:
                                 print("First of all, draw rectangle...\n")
                         else:
@@ -45,29 +45,28 @@ class GrabCut():
                 elif event==cv2.EVENT_LBUTTONUP and self.drawing:
                         self.drawing=False
 
-
-        def process(self,image_path,output_path):
-			image=cv2.imread(image_path)
-			self.img=image.copy()
-			self.mask=np.zeros(image.shape[:2],dtype="uint8")
-			cv2.namedWindow("GrabCut Image")
-			cv2.namedWindow("Mask")
-			print("Instructions:")
-			print("Draw a rectangle around the object using right mouse button (one-time)")
-			print("To enhance segmentation, use left mouse button and the following keys")
-			print("Key 0: Definite Background")
-			print("Key 1: Probable Background")
-			print("Key 2: Definite Foreground")
-			print("Key 3: Probable Foreground")
-			print("To reset everything press r")
-			print("To segment image press n")
-			print("To save image press s")
-			print("To quit press q")
-                cv2.setMouseCallback("GrabCut Image",self.onmouse)
-                while(True):
-                        cv2.imshow("GrabCut Image",self.img)
-                        cv2.imshow("Mask",self.mask)
-                        key=cv2.waitKey(1) & 0xFF
+def process(self,image_path,output_path):
+	image=cv2.imread(image_path)
+	self.img=image.copy()
+	self.mask=np.zeros(image.shape[:2],dtype="uint8")
+	cv2.namedWindow("GrabCut Image")
+	cv2.namedWindow("Mask")
+	print("Instructions:")
+	print("Draw a rectangle around the object using right mouse button (one-time)")
+	print("To enhance segmentation, use left mouse button and the following keys")
+	print("Key 0: Definite Background")
+	print("Key 1: Probable Background")
+	print("Key 2: Definite Foreground")
+	print("Key 3: Probable Foreground")
+	print("To reset everything press r")
+	print("To segment image press n")
+	print("To save image press s")
+	print("To quit press q")
+        cv2.setMouseCallback("GrabCut Image",self.onmouse)
+        while(True):
+                    cv2.imshow("GrabCut Image",self.img)
+                    cv2.imshow("Mask",self.mask)
+                    key=cv2.waitKey(1) & 0xFF
                         if key==ord('q'):
                                 break
                         elif key==ord("0") or key==ord("1"):
