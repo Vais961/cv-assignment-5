@@ -61,7 +61,7 @@ def process(self,image_path,output_path):
 	print("To segment image press n")
 	print("To save image press s")
 	print("To quit press q")
-       		 cv2.setMouseCallback("GrabCut Image",self.onmouse)
+       	cv2.setMouseCallback("GrabCut Image",self.onmouse)
       		 while(True):
 			    cv2.imshow("GrabCut Image",self.img)
 			    cv2.imshow("Mask",self.mask)
